@@ -1,0 +1,8 @@
+streamlit
+fastapi
+uvicorn
+PyMuPDF
+spacy
+google-genai
+python-dotenv
+requests
