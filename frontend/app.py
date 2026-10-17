@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-
+RENDER_API_URL = "https://resume-analyzer-api-7e26.onrender.com/"
 st.set_page_config(page_title="AI Resume Analyzer", page_icon="📄", layout="wide", initial_sidebar_state="collapsed")
 
 # --- Custom CSS (Teal & Emerald Theme) ---
@@ -72,7 +72,7 @@ with col2:
             with st.spinner("Extracting text from PDF..."):
                 try:
                     files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
-                    parse_res = requests.post("http://127.0.0.1:8000/parse-resume", files=files)
+                    parse_res = requests.post(f"{RENDER_API_URL}/parse-resume", files=files)
                     if parse_res.status_code != 200:
                         st.error(f"Parsing Error: {parse_res.json().get('detail')}")
                         st.stop()
@@ -85,7 +85,7 @@ with col2:
             with st.spinner("AI is comparing your skills..."):
                 try:
                     payload = {"resume_text": resume_text, "job_description": job_description}
-                    analysis_res = requests.post("http://127.0.0.1:8000/analyze-match", json=payload)
+                    analysis_res = requests.post(f"{RENDER_API_URL}/analyze-match", json=payload)
                     
                     # Catch backend errors (like API Key issues)
                     if analysis_res.status_code != 200:
